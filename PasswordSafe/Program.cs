@@ -39,7 +39,8 @@ namespace PasswordSafe
                 }
                 else
                 {
-                    Console.WriteLine("Bad Password.");
+                    Console.WriteLine("Bad Password.  Press Any key.");
+                    Console.ReadKey();
                 }
             }
         }
