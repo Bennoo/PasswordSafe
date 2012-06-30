@@ -1,0 +1,23 @@
+﻿<UserControl x:Class="GUI.AccountView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:GUI"
+             xmlns:apexMVVM="clr-namespace:Apex.MVVM;assembly=Apex"
+             xmlns:apexCommands="clr-namespace:Apex.Commands;assembly=Apex"
+             xmlns:apexControls="clr-namespace:Apex.Controls;assembly=Apex"
+             xmlns:apexConverters="clr-namespace:Apex.Converters;assembly=Apex"
+             mc:Ignorable="d" 
+             d:DesignHeight="300" d:DesignWidth="300">
+    
+            
+    <apexControls:PaddedGrid Rows="Auto,Auto" Columns="*,2*" Padding="4">
+        
+        <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" />
+        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
+
+        <Label Grid.Row="1" Grid.Column="0" Content="Password:" />
+        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Decrypted}" />
+    </apexControls:PaddedGrid>
+</UserControl>
