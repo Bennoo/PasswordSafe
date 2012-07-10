@@ -10,14 +10,13 @@ namespace GUI
     public class Crypto
     {
         private static byte[] _salt = Encoding.ASCII.GetBytes("12345678");
+        private static string shared = "SharedKey";
 
-        public static string Encrypt(string plainText, string shared)
+        public static string Encrypt(string plainText)
         {
             if (string.IsNullOrEmpty(plainText))
                 throw new ArgumentNullException();
-            if (string.IsNullOrEmpty(shared))
-                throw new ArgumentNullException();
-
+            
             string outStr = null;
 
             RijndaelManaged alg = null;
@@ -52,13 +51,11 @@ namespace GUI
             return outStr;
         }
 
-        public static string Decrypt(string cipher, string shared)
+        public static string Decrypt(string cipher)
         {
             if (string.IsNullOrEmpty(cipher))
                 throw new ArgumentNullException("cipher");
-            if (string.IsNullOrEmpty(shared))
-                throw new ArgumentNullException("shared");
-
+            
             RijndaelManaged alg = null;
             string plaintext = null;
 

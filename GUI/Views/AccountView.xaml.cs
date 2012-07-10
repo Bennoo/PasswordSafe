@@ -16,5 +16,10 @@ namespace GUI
         {
             InitializeComponent();
         }
+
+        public void FocusAccountName()
+        {
+            accountName.Focus();
+        }
     }
 }

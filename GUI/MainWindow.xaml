@@ -4,6 +4,6 @@
         xmlns:local="clr-namespace:GUI"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        <local:MainView />
+        <local:MainView Grid.Row="1"/>
     </Grid>
 </Window>

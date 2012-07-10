@@ -9,7 +9,7 @@
              xmlns:apexControls="clr-namespace:Apex.Controls;assembly=Apex"
              xmlns:apexConverters="clr-namespace:Apex.Converters;assembly=Apex"
              mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
+             d:DesignHeight="300" d:DesignWidth="500">
     
     
     <!-- The View creates its own ViewModel, so set the ViewModel 
@@ -17,7 +17,35 @@
     <apexMVVM:View.ViewModel>
         <local:MainViewModel x:Name="viewModel" />
     </apexMVVM:View.ViewModel>
-            
+       
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="100" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+        <StackPanel Grid.Row="0" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Left" >
+            <Label Content="Master Password: " Margin="4" />
+            <TextBox Text="{Binding MasterPassword}" Margin="4" Width="250" x:Name="masterPassword"/>
+            <Button Content="Load Accounts" Margin="4" Command="{Binding LoadAccountsCommand}"/>
+        </StackPanel>
+        
+        <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Accounts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAccount}" />
+        <local:AccountView x:Name="accountView" Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedAccount}" />
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Content="Add Account" Margin="4" Command="{Binding AddAccountCommand}"/>
+            <Button Content="Delete Account" Margin="4" Command="{Binding DeleteAccountCommand}"/>
+        </StackPanel>
+
+
+    </Grid>
+    
+    <!--
     <apexControls:ApexGrid Columns="*,2*" Rows="2*,2">
         
         <ListBox Grid.Column="0" ItemsSource="{Binding Accounts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAccount}"/>
@@ -25,4 +53,5 @@
         <local:AccountView Grid.Column="1" DataContext="{Binding SelectedAccount}" />
         
     </apexControls:ApexGrid>
+    -->
 </UserControl>
