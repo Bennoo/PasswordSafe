@@ -37,12 +37,13 @@ namespace GUI
                 string Encrypted = Crypto.Encrypt(input);
 
                 //  The current master password
-                string password = ConfigurationSettings.AppSettings.Get("MasterPassword");
+                string password = Properties.Settings.Default.MasterPassword;
 
                 //  Check to see if the settings master password is set
                 if (password == "")
                 {
-                    ConfigurationSettings.AppSettings.Set("MasterPassword", Encrypted);
+                    Properties.Settings.Default.MasterPassword = Encrypted;
+                    Properties.Settings.Default.Save();
                 }
                 else
                 {

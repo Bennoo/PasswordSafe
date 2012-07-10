@@ -47,14 +47,14 @@ namespace GUI
         /// <summary>
         /// The Accounts observable collection.
         /// </summary>
-        private ObservableCollection<AccountViewModel> AccountsProperty =
-          new ObservableCollection<AccountViewModel>();
+        private ObservableCollection<Account> AccountsProperty =
+          new ObservableCollection<Account>();
 
         /// <summary>
         /// Gets the Accounts observable collection.
         /// </summary>
         /// <value>The Accounts observable collection.</value>
-        public ObservableCollection<AccountViewModel> Accounts
+        public ObservableCollection<Account> Accounts
         {
             get { return AccountsProperty; }
         }
@@ -69,9 +69,9 @@ namespace GUI
         /// Gets or sets SelectedAccount.
         /// </summary>
         /// <value>The value of SelectedAccount.</value>
-        public AccountViewModel SelectedAccount
+        public Account SelectedAccount
         {
-            get { return (AccountViewModel)GetValue(SelectedAccountProperty); }
+            get { return (Account)GetValue(SelectedAccountProperty); }
             set 
             { 
                 SetValue(SelectedAccountProperty, value);
@@ -84,18 +84,9 @@ namespace GUI
         /// </summary>
         public MainViewModel()
         {
-            /*MasterPassword = ConfigurationSettings.AppSettings.Get("MasterPassword");
-            data = new Data();
-            //Deserialize();
-            Accounts.Add(new AccountViewModel() { Name = "test", Encrypted = "1234", Decrypted = "3214" });
-            Accounts.Add(new AccountViewModel() { Name = "test2", Encrypted = "aklsdgf", Decrypted = "alskdgfa" });
-
-            data.Accounts = Accounts;*/
-
             LoadAccountsCommand = new Command(DoLoadAccountsCommand);
             AddAccountCommand = new Command(DoAddAccountCommand, false);
             DeleteAccountCommand = new Command(DoDeleteAccountCommand, false);
-
         }
 
         #region Commands
@@ -128,7 +119,7 @@ namespace GUI
         private void DoAddAccountCommand(object parameter)
         {
             //  Create an account
-            AccountViewModel newAccount = new AccountViewModel()
+            Account newAccount = new Account()
             {
                 Name = "New Account"
             };
@@ -179,19 +170,34 @@ namespace GUI
 
         private void Serialize()
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Data));
-            TextWriter writer = new StreamWriter("passwords.xml");
-            serializer.Serialize(writer, data);
-            writer.Close();
+            XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<Account>));
+            using (StreamWriter wr = new StreamWriter("accounts.xml"))
+            {
+                xs.Serialize(wr, Accounts);
+            }
         }
-        /*
+        
         private void Deserialize()
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(Passwords));
-            TextReader reader = new StreamReader("passwords.xml");
-            Passwords p = (Passwords)deserializer.Deserialize(reader);
-            reader.Close();
-            passwords = p;
-        }*/       
+            List<Account> temp;
+
+            XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<Account>));
+            using (StreamReader rd = new StreamReader("customers.xml"))
+            {
+                temp = xs.Deserialize(rd) as List<Account>;
+            }   
+
+            //add to the collection
+            foreach (var account in temp)
+            {
+                Accounts.Add(new Account() 
+                { 
+                    Name = account.Name,
+                    Encrypted = account.Encrypted
+                });
+            }
+        }
+
+        
     }
 }
