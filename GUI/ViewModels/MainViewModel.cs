@@ -106,7 +106,9 @@ namespace GUI
         /// <param name="parameter">The LoadAccounts command parameter.</param>
         private void DoLoadAccountsCommand(object parameter)
         {
-            AddAccountCommand.CanExecute = true;            
+            AddAccountCommand.CanExecute = true;
+            //deserialize
+
         }
 
         /// <summary>
@@ -177,21 +179,21 @@ namespace GUI
 
         #endregion
 
-        private void Serialize()
+        private void Serialize<T>(T item)
         {
-            XmlSerializer serializer = new XmlSerializer(typeof(Data));
-            TextWriter writer = new StreamWriter("passwords.xml");
-            serializer.Serialize(writer, data);
-            writer.Close();
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StreamWriter writer = new StreamWriter("passwords.xml"))
+            {
+                serializer.Serialize(writer, item);
+            }
         }
-        /*
+        
         private void Deserialize()
         {
-            XmlSerializer deserializer = new XmlSerializer(typeof(Passwords));
+            XmlSerializer deserializer = new XmlSerializer(typeof(Data));
             TextReader reader = new StreamReader("passwords.xml");
-            Passwords p = (Passwords)deserializer.Deserialize(reader);
+            Data p = (Data)deserializer.Deserialize(reader);
             reader.Close();
-            passwords = p;
-        }*/       
+        }       
     }
 }
