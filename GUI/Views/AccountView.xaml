@@ -17,6 +17,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
@@ -29,23 +30,14 @@
         <Label Grid.Row="1" Grid.Column="0" Content="Password:" Margin="4" />
         <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Decrypted}" Margin="4" />
 
-        <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="4" Content="Generate Password" />
+        <Label Grid.Row="2" Grid.Column="0" Content="Encrypted:" Margin="4" />
+        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Encrypted}" Margin="4" IsReadOnly="True" />
+        
+        <!--
+        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button Margin="4" Content="Generate Password" Command="{Binding GeneratePasswordCommand}"/>
         </StackPanel>
+        -->
         
     </Grid>
-    <!--        
-    <apexControls:PaddedGrid Rows="Auto,Auto" Columns="*,2*" Padding="4">
-        
-        <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" />
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" />
-
-        <Label Grid.Row="1" Grid.Column="0" Content="Password:" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Decrypted}" />
-
-        <StackPanel Grid.Row="1" Grid.ColumnSpan="2">
-            <Button Margin="4" Content="Regenerate Password" />
-        </StackPanel>
-    </apexControls:PaddedGrid>
-    -->
 </UserControl>

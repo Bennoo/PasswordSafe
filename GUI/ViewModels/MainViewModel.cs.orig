@@ -1,9 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.IO;
-using System.Xml.Serialization;
+using System.Linq;
+using System.Text;
 using Apex.MVVM;
+//using PasswordSafe;
+using System.Xml.Serialization;
+using System.IO;
+using System.Configuration;
+using System.ComponentModel;
 
 namespace GUI
 {
@@ -15,10 +20,10 @@ namespace GUI
     {
 
         public Data data { get; set; }
+        //public String MasterPassword { get; set; }
         public String Shared { get; set; }
 
-
-        #region Properties
+        
         /// <summary>
         /// The NotifyingProperty for the MasterPassword property.
         /// </summary>
@@ -32,13 +37,13 @@ namespace GUI
         public String MasterPassword
         {
             get { return (String)GetValue(MasterPasswordProperty); }
-            set
-            {
+            set 
+            { 
                 SetValue(MasterPasswordProperty, value);
                 Console.WriteLine("MasterPassword: {0}", MasterPassword);
             }
         }
-
+   
         /// <summary>
         /// The Accounts observable collection.
         /// </summary>
@@ -53,7 +58,7 @@ namespace GUI
         {
             get { return AccountsProperty; }
         }
-
+        
         /// <summary>
         /// The NotifyingProperty for the SelectedAccount property.
         /// </summary>
@@ -67,14 +72,12 @@ namespace GUI
         public Account SelectedAccount
         {
             get { return (Account)GetValue(SelectedAccountProperty); }
-            set
-            {
+            set 
+            { 
                 SetValue(SelectedAccountProperty, value);
                 DeleteAccountCommand.CanExecute = value != null;
-                GeneratePasswordCommand.CanExecute = value != null; 
             }
-        } 
-        #endregion
+        }
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MainViewModel"/> class.
@@ -84,7 +87,6 @@ namespace GUI
             LoadAccountsCommand = new Command(DoLoadAccountsCommand);
             AddAccountCommand = new Command(DoAddAccountCommand, false);
             DeleteAccountCommand = new Command(DoDeleteAccountCommand, false);
-            GeneratePasswordCommand = new Command(DoGeneratePasswordCommand, false);
         }
 
         #region Commands
@@ -95,8 +97,9 @@ namespace GUI
         /// <param name="parameter">The LoadAccounts command parameter.</param>
         private void DoLoadAccountsCommand(object parameter)
         {
-            Deserialize();
             AddAccountCommand.CanExecute = true;
+            //deserialize
+
         }
 
         /// <summary>
@@ -108,6 +111,8 @@ namespace GUI
             get;
             private set;
         }
+
+
 
         /// <summary>
         /// Performs the AddAccount command.
@@ -138,6 +143,8 @@ namespace GUI
             private set;
         }
 
+
+
         /// <summary>
         /// Performs the DeleteAccount command.
         /// </summary>
@@ -161,68 +168,53 @@ namespace GUI
             private set;
         }
 
-        /// <summary>
-        /// Performs the GeneratePassword command.
-        /// </summary>
-        /// <param name="parameter">The GeneratePassword command parameter.</param>
-        private void DoGeneratePasswordCommand(object parameter)
-        {
-            SelectedAccount.Encrypted = Crypto.Encrypt(SelectedAccount.Decrypted);
-            
-            Account temp = SelectedAccount;
-
-            SelectedAccount = null;
-
-            SelectedAccount = temp;
-
-            temp = null;
-
-            Serialize();
-        }
-
-        /// <summary>
-        /// Gets the GeneratePassword command.
-        /// </summary>
-        /// <value>The value of .</value>
-        public Command GeneratePasswordCommand
-        {
-            get;
-            private set;
-        }
-
         #endregion
 
-        #region Helpers
-        public void Serialize()
+        private void Serialize<T>(T item)
         {
+<<<<<<< HEAD
+            XmlSerializer serializer = new XmlSerializer(typeof(T));
+            using (StreamWriter writer = new StreamWriter("passwords.xml"))
+            {
+                serializer.Serialize(writer, item);
+=======
             XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<Account>));
             using (StreamWriter wr = new StreamWriter("accounts.xml"))
             {
                 xs.Serialize(wr, Accounts);
+>>>>>>> df07bf77b1caba2e832584e611c477c698a486b1
             }
         }
-
-        public void Deserialize()
+        
+        private void Deserialize()
         {
+<<<<<<< HEAD
+            XmlSerializer deserializer = new XmlSerializer(typeof(Data));
+            TextReader reader = new StreamReader("passwords.xml");
+            Data p = (Data)deserializer.Deserialize(reader);
+            reader.Close();
+        }       
+=======
             List<Account> temp;
 
-            XmlSerializer xs = new XmlSerializer(typeof(List<Account>));
-            using (StreamReader rd = new StreamReader("accounts.xml"))
+            XmlSerializer xs = new XmlSerializer(typeof(ObservableCollection<Account>));
+            using (StreamReader rd = new StreamReader("customers.xml"))
             {
                 temp = xs.Deserialize(rd) as List<Account>;
-            }
+            }   
 
             //add to the collection
             foreach (var account in temp)
             {
-                Accounts.Add(new Account()
-                {
+                Accounts.Add(new Account() 
+                { 
                     Name = account.Name,
-                    Encrypted = account.Encrypted,
-                    Decrypted = Crypto.Decrypt(account.Encrypted)
+                    Encrypted = account.Encrypted
                 });
             }
         }
-        #endregion
+
+        
+>>>>>>> df07bf77b1caba2e832584e611c477c698a486b1
     }
 }

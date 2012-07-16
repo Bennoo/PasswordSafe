@@ -19,14 +19,25 @@ namespace GUI
             InitializeComponent();
 
             viewModel.AddAccountCommand.Executed += new CommandEventHandler(AddAccountCommand_Executed);
+            viewModel.GeneratePasswordCommand.Executed += new CommandEventHandler(GeneratePasswordCommand_Executed);
             viewModel.DeleteAccountCommand.Executing += new CancelCommandEventHandler(DeleteAccountCommand_Executing);
             viewModel.LoadAccountsCommand.Executing += new CancelCommandEventHandler(LoadAccountsCommand_Executing);
+        }
+
+        void GeneratePasswordCommand_Executed(object sender, CommandEventArgs args)
+        {
+
         }
 
         void LoadAccountsCommand_Executing(object sender, CancelCommandEventArgs args)
         {
             //Properties.Settings.Default.MasterPassword = "";
             //Properties.Settings.Default.Save();
+
+            // TODO: Figure out why the load passwords is not getting the master password from the property file correctly.
+
+            // REMOVE THIS
+            //return;
 
             string input = masterPassword.Text;
             if (input == "")
@@ -36,22 +47,20 @@ namespace GUI
             }
             else
             {
-                //  Encrypt the input
-                string Encrypted = Crypto.Encrypt(input);
-
                 //  The current master password
-                string password = Properties.Settings.Default.MasterPassword;
+                string password = Properties.Settings.Default.MasterPassword;                
 
                 //  Check to see if the settings master password is set
                 if (password == "")
                 {
-                    Properties.Settings.Default.MasterPassword = Encrypted;
+                    Properties.Settings.Default.MasterPassword = Crypto.Encrypt(input);
                     Properties.Settings.Default.Save();
                 }
                 else
                 {
+                    string Decrypted = Crypto.Decrypt(password);
                     //  Compare to the stored MasterPassword.
-                    if (password != Encrypted)
+                    if (input != Decrypted)
                     {
                         MessageBox.Show("Incorrect master password entered.", "Invalid master password", MessageBoxButton.OK);
                         args.Cancel = true;

@@ -32,7 +32,6 @@ namespace GUI
             set { SetValue(NameProperty, value); }
         }
 
-
         /// <summary>
         /// The NotifyingProperty for the Encrypted property.
         /// </summary>
@@ -48,7 +47,6 @@ namespace GUI
             get { return (string)GetValue(EncryptedProperty); }
             set { SetValue(EncryptedProperty, value); }
         }
-
         
         /// <summary>
         /// The NotifyingProperty for the Decrypted property.
@@ -72,7 +70,32 @@ namespace GUI
         /// </summary>
         public AccountViewModel()
         {
+            
         }
+
+        #region Commands
+
+        /// <summary>
+        /// Performs the GeneratePassword command.
+        /// </summary>
+        /// <param name="parameter">The GeneratePassword command parameter.</param>
+        private void DoGeneratePasswordCommand(object parameter)
+        {
+            Encrypted = Crypto.Encrypt(Decrypted);
+        }
+
+        /// <summary>
+        /// Gets the GeneratePassword command.
+        /// </summary>
+        /// <value>The value of .</value>
+        public Command GeneratePasswordCommand
+        {
+            get;
+            private set;
+        }
+
+
+        #endregion
 
 
 

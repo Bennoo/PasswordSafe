@@ -38,8 +38,9 @@
         <local:AccountView x:Name="accountView" Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedAccount}" />
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Content="Add Account" Margin="4" Command="{Binding AddAccountCommand}"/>
-            <Button Content="Delete Account" Margin="4" Command="{Binding DeleteAccountCommand}"/>
+            <Button Content="Add Account"       Margin="4" Command="{Binding AddAccountCommand}"/>
+            <Button Content="Delete Account"    Margin="4" Command="{Binding DeleteAccountCommand}"/>
+            <Button Content="Generate Password" Margin="4" Command="{Binding GeneratePasswordCommand}"/>
         </StackPanel>
 
 
