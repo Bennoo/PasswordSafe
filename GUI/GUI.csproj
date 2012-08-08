@@ -62,6 +62,7 @@
     </ApplicationDefinition>
     <Compile Include="Helpers\Crypto.cs" />
     <Compile Include="Helpers\Data.cs" />
+    <Compile Include="Helpers\Converters.cs" />
     <Compile Include="Models\Account.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="ViewModels\AccountViewModel.cs" />
@@ -71,6 +72,9 @@
     </Compile>
     <Compile Include="Views\MainView.xaml.cs">
       <DependentUpon>MainView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\ResetPasswordView.xaml.cs">
+      <DependentUpon>ResetPasswordView.xaml</DependentUpon>
     </Compile>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -89,6 +93,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\MainView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\ResetPasswordView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -131,6 +139,14 @@
     <Content Include="External References\Apex.Silverlight.dll" />
     <Content Include="External References\Apex.WinForms.dll" />
     <Content Include="External References\Apex.WP7.dll" />
+    <Resource Include="Images\Other Email.png" />
+    <Resource Include="Images\gmail.png" />
+    <Resource Include="Images\Hotmail.png" />
+    <Resource Include="Images\yahoo.png" />
+    <Resource Include="Images\Foursquare.png" />
+    <Resource Include="Images\Other Social.png" />
+    <Resource Include="Images\Twitter.png" />
+    <Resource Include="Images\Facebook.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

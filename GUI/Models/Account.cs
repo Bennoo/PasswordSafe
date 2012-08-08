@@ -29,5 +29,7 @@ namespace GUI
         public String Encrypted { get; set; }
         [XmlIgnore]
         public String Decrypted { get; set; }
+        [XmlElement]
+        public String Type { get; set; }
     }
 }

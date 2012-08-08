@@ -27,36 +27,77 @@
              xmlns:apexCommands="clr-namespace:Apex.Commands;assembly=Apex"
              xmlns:apexControls="clr-namespace:Apex.Controls;assembly=Apex"
              xmlns:apexConverters="clr-namespace:Apex.Converters;assembly=Apex"
-             mc:Ignorable="d" 
-             d:DesignHeight="300" d:DesignWidth="300">
-    
-    
-    <Grid>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-            <RowDefinition Height="Auto" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto" />
-            <ColumnDefinition Width="*" />
-        </Grid.ColumnDefinitions>
+             xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
+             mc:Ignorable="d">
         
-        <Label Grid.Row="0" Grid.Column="0" Content="Account Name:" Margin="4" />
-        <TextBox Grid.Row="0" Grid.Column="1" Text="{Binding Name}" Margin="4" x:Name="accountName" />
+    <UserControl.Resources>
+        <local:ItemToStringConverter x:Key="ItemToString" />
+        <local:ItemToImageStringConverter x:Key="ItemToImageString" />
+        <LinearGradientBrush x:Key="HeaderBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="LightGray" Offset="0" />
+            <GradientStop Color="Gray" Offset="1" />
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="ContentBrush" StartPoint="0.5,0" EndPoint="0.5,1">
+            <GradientStop Color="Gray" Offset="0" />
+            <GradientStop Color="LightGray" Offset="1" />
+        </LinearGradientBrush>
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="Foreground" Value="White" />
+        </Style>
+    </UserControl.Resources>
+        
+    <Border CornerRadius="4" BorderBrush="Black" BorderThickness="1">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+                <!-- Header Grid -->
+            <Grid Grid.Row="0" Background="{StaticResource HeaderBrush}">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Image Grid.Column="0" Source="{Binding Path=Type,Converter={StaticResource ItemToImageString}}" Margin="4" MaxHeight="50" MaxWidth="50" />
+                <Label Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Bottom" Content="{Binding Path=Type,Converter={StaticResource ItemToString}}" FontSize="24" />
+            </Grid>
+            <!-- Content Grid -->
+            <Grid Grid.Row="1" Background="{StaticResource ContentBrush}">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="0" Grid.Column="1" Content="Account Name:" Margin="4" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="0" Grid.Column="2" Text="{Binding Name}" Margin="4" x:Name="accountName" />
 
-        <Label Grid.Row="1" Grid.Column="0" Content="Password:" Margin="4" />
-        <TextBox Grid.Row="1" Grid.Column="1" Text="{Binding Decrypted}" Margin="4" />
+                <Label Grid.Row="1" Grid.Column="1" Content="Account Type:" Margin="4" Style="{StaticResource LabelStyle}"/>
+                <ComboBox Grid.Row="1" Grid.Column="2" Margin="4" SelectedIndex="{Binding Path=Type}">
+                    <ComboBoxItem Content="Facebook" />
+                    <ComboBoxItem Content="Twitter"/>
+                    <ComboBoxItem Content="Foursquare"/>
+                    <ComboBoxItem Content="Other Social"/>
+                    <ComboBoxItem Content="GMail"/>
+                    <ComboBoxItem Content="Yahoo"/>
+                    <ComboBoxItem Content="Hotmail"/>
+                    <ComboBoxItem Content="Other Email"/>
+                </ComboBox>
 
-        <Label Grid.Row="2" Grid.Column="0" Content="Encrypted:" Margin="4" />
-        <TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Encrypted}" Margin="4" IsReadOnly="True" />
+                <Label Grid.Row="2" Grid.Column="1" Content="Password:" Margin="4" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="2" Grid.Column="2" Text="{Binding Decrypted}" Margin="4" />
+
+                <Label Grid.Row="3" Grid.Column="1" Content="Encrypted:" Margin="4" Style="{StaticResource LabelStyle}"/>
+                <TextBox Grid.Row="3" Grid.Column="2" Text="{Binding Encrypted}" Margin="4" IsReadOnly="True" />
+
+            </Grid>
+        </Grid>
         
-        <!--
-        <StackPanel Grid.Row="3" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
-            <Button Margin="4" Content="Generate Password" Command="{Binding GeneratePasswordCommand}"/>
-        </StackPanel>
-        -->
-        
-    </Grid>
+    </Border>
 </UserControl>

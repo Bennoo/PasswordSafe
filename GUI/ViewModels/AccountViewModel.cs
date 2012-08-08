@@ -12,10 +12,11 @@
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses);.
  ******************************/
 
 using Apex.MVVM;
+using System.Collections.ObjectModel;
 
 namespace GUI
 {
@@ -42,6 +43,24 @@ namespace GUI
             get { return (string)GetValue(NameProperty); }
             set { SetValue(NameProperty, value); }
         }
+
+        
+        /// <summary>
+        /// The NotifyingProperty for the Type property.
+        /// </summary>
+        private readonly NotifyingProperty TypeProperty =
+          new NotifyingProperty("Type", typeof(string), default(string));
+
+        /// <summary>
+        /// Gets or sets Type.
+        /// </summary>
+        /// <value>The value of Type.</value>
+        public string Type
+        {
+            get { return (string)GetValue(TypeProperty); }
+            set { SetValue(TypeProperty, value); }
+        }
+
 
         /// <summary>
         /// The NotifyingProperty for the Encrypted property.
@@ -74,14 +93,14 @@ namespace GUI
             get { return (string)GetValue(DecryptedProperty); }
             set { SetValue(DecryptedProperty, value); }
         }
+
         #endregion
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="AccountViewModel"/> class.
+        /// Initializes a new instance of the <see cref="AccountViewModel"); class.
         /// </summary>
         public AccountViewModel()
         {
-            
         }
 
         #region Commands

@@ -102,6 +102,7 @@ namespace GUI
             AddAccountCommand = new Command(DoAddAccountCommand, false);
             DeleteAccountCommand = new Command(DoDeleteAccountCommand, false);
             GeneratePasswordCommand = new Command(DoGeneratePasswordCommand, false);
+            ResetPasswordCommand = new Command(DoResetPasswordCommand, true);
         }
 
         #region Commands
@@ -132,6 +133,8 @@ namespace GUI
         /// <param name="parameter">The AddAccount command parameter.</param>
         private void DoAddAccountCommand(object parameter)
         {
+            //  make the view visible
+
             //  Create an account
             Account newAccount = new Account()
             {
@@ -197,6 +200,28 @@ namespace GUI
             Serialize();
         }
 
+
+
+        /// <summary>
+        /// Performs the ResetPassword command.
+        /// </summary>
+        /// <param name="parameter">The ResetPassword command parameter.</param>
+        private void DoResetPasswordCommand(object parameter)
+        {
+            ResetPasswordView view = new ResetPasswordView();
+            view.ShowDialog();
+        }
+
+        /// <summary>
+        /// Gets the ResetPassword command.
+        /// </summary>
+        /// <value>The value of .</value>
+        public Command ResetPasswordCommand
+        {
+            get;
+            private set;
+        }
+
         /// <summary>
         /// Gets the GeneratePassword command.
         /// </summary>
@@ -236,7 +261,8 @@ namespace GUI
                 {
                     Name = account.Name,
                     Encrypted = account.Encrypted,
-                    Decrypted = Crypto.Decrypt(account.Encrypted)
+                    Decrypted = Crypto.Decrypt(account.Encrypted),
+                    Type = account.Type
                 });
             }
         }

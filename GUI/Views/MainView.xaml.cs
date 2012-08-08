@@ -41,6 +41,8 @@ namespace GUI
             viewModel.LoadAccountsCommand.Executing += new CancelCommandEventHandler(LoadAccountsCommand_Executing);
         }
 
+        
+
         void GeneratePasswordCommand_Executed(object sender, CommandEventArgs args)
         {
 

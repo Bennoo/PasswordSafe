@@ -28,9 +28,13 @@
              xmlns:apexConverters="clr-namespace:Apex.Converters;assembly=Apex"
              mc:Ignorable="d" 
              d:DesignHeight="300" d:DesignWidth="500">
-    
-    
-    <!-- The View creates its own ViewModel, so set the ViewModel 
+
+
+    <UserControl.Resources>
+        <local:BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
+
+        <!-- The View creates its own ViewModel, so set the ViewModel 
     to a new instance of the ViewModel class. -->
     <apexMVVM:View.ViewModel>
         <local:MainViewModel x:Name="viewModel" />
@@ -50,27 +54,18 @@
             <Label Content="Master Password: " Margin="4" />
             <TextBox Text="{Binding MasterPassword}" Margin="4" Width="250" x:Name="masterPassword"/>
             <Button Content="Load Accounts" Margin="4" Command="{Binding LoadAccountsCommand}"/>
+            <Button Content="Reset Password" Margin="4" Command="{Binding ResetPasswordCommand}"/>
         </StackPanel>
         
         <ListBox Grid.Row="1" Grid.Column="0" ItemsSource="{Binding Accounts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAccount}" />
-        <local:AccountView x:Name="accountView" Grid.Row="1" Grid.Column="1" DataContext="{Binding SelectedAccount}" />
+        <Grid Grid.Row="1" Grid.Column="1" Visibility="{Binding SelectedAccount,Converter={StaticResource BoolToVis}}">  
+            <local:AccountView x:Name="accountView" DataContext="{Binding SelectedAccount}" Padding="5"/>
+        </Grid>
 
         <StackPanel Grid.Row="2" Grid.ColumnSpan="2" Orientation="Horizontal" HorizontalAlignment="Right">
             <Button Content="Add Account"       Margin="4" Command="{Binding AddAccountCommand}"/>
             <Button Content="Delete Account"    Margin="4" Command="{Binding DeleteAccountCommand}"/>
             <Button Content="Generate Password" Margin="4" Command="{Binding GeneratePasswordCommand}"/>
         </StackPanel>
-
-
     </Grid>
-    
-    <!--
-    <apexControls:ApexGrid Columns="*,2*" Rows="2*,2">
-        
-        <ListBox Grid.Column="0" ItemsSource="{Binding Accounts}" DisplayMemberPath="Name" SelectedItem="{Binding SelectedAccount}"/>
-
-        <local:AccountView Grid.Column="1" DataContext="{Binding SelectedAccount}" />
-        
-    </apexControls:ApexGrid>
-    -->
 </UserControl>
